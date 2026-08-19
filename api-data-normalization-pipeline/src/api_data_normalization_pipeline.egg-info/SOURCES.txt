@@ -1,0 +1,11 @@
+pyproject.toml
+src/api_data_normalization_pipeline.egg-info/PKG-INFO
+src/api_data_normalization_pipeline.egg-info/SOURCES.txt
+src/api_data_normalization_pipeline.egg-info/dependency_links.txt
+src/api_data_normalization_pipeline.egg-info/top_level.txt
+src/api_pipeline/__init__.py
+src/api_pipeline/api_client.py
+src/api_pipeline/normalization.py
+src/api_pipeline/pipeline.py
+tests/test_api_client.py
+tests/test_normalization.py
