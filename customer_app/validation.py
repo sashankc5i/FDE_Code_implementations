@@ -1,6 +1,61 @@
-"""Validation functions for customer data."""
+"""Validation functions for customer and transaction data."""
 
 from customer_app.exceptions import InvalidCustomerDataError
+
+
+def validate_transaction(transaction: dict) -> None:
+    """
+    Validate a single transaction dictionary.
+
+    Raises:
+        InvalidCustomerDataError:
+            If the transaction data is invalid.
+    """
+
+    required_fields = {
+        "transaction_id",
+        "amount",
+        "currency",
+    }
+
+    missing_fields = required_fields - transaction.keys()
+
+    if missing_fields:
+        raise InvalidCustomerDataError(
+            f"Missing transaction fields: "
+            f"{sorted(missing_fields)}"
+        )
+
+    if not isinstance(
+        transaction["transaction_id"],
+        str,
+    ):
+        raise InvalidCustomerDataError(
+            "Transaction ID must be a string."
+        )
+
+    if not isinstance(
+        transaction["amount"],
+        (int, float),
+    ):
+        raise InvalidCustomerDataError(
+            "Transaction amount must be an integer or float."
+        )
+
+    if transaction["amount"] < 0:
+        raise InvalidCustomerDataError(
+            "Transaction amount cannot be negative."
+        )
+
+    if not isinstance(
+        transaction["currency"],
+        str,
+    ):
+        raise InvalidCustomerDataError(
+            "Transaction currency must be a string."
+        )
+
+
 def validate_customer_data(customer_data: dict) -> None:
     """
     Validate a raw customer dictionary.
@@ -21,7 +76,8 @@ def validate_customer_data(customer_data: dict) -> None:
 
     if missing_fields:
         raise InvalidCustomerDataError(
-            f"Missing required fields: {sorted(missing_fields)}"
+            f"Missing required fields: "
+            f"{sorted(missing_fields)}"
         )
 
     if not isinstance(customer_data["id"], int):
@@ -49,18 +105,11 @@ def validate_customer_data(customer_data: dict) -> None:
             "Transactions cannot be empty."
         )
 
-    if not all(
-        isinstance(transaction, (int, float))
-        for transaction in customer_data["transactions"]
-    ):
-        raise InvalidCustomerDataError(
-            "Every transaction must be an integer or float."
-        )
+    for transaction in customer_data["transactions"]:
 
-    if any(
-        transaction < 0
-        for transaction in customer_data["transactions"]
-    ):
-        raise InvalidCustomerDataError(
-            "Transaction values cannot be negative."
-        )
+        if not isinstance(transaction, dict):
+            raise InvalidCustomerDataError(
+                "Every transaction must be a dictionary."
+            )
+
+        validate_transaction(transaction)

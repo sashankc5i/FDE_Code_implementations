@@ -1,35 +1,46 @@
-"""Domain models for the customer data processor."""
+"""Domain models for customer data."""
+
+from dataclasses import dataclass
 
 
+@dataclass
+class Transaction:
+    """Represent a customer transaction."""
+
+    transaction_id: str
+    amount: float
+    currency: str
+
+
+@dataclass
 class Customer:
-    """Represent a customer and their transaction history."""
+    """Represent a customer."""
 
-    def __init__(
-        self,
-        customer_id: int,
-        name: str,
-        country: str,
-        transactions: list[float],
-    ) -> None:
-        self.customer_id = customer_id
-        self.name = name
-        self.country = country
-        self.transactions = transactions
+    customer_id: int
+    name: str
+    country: str
+    transactions: list[Transaction]
 
     def total_spend(self) -> float:
-        """Return the customer's total transaction value."""
+        """Calculate total customer spending."""
 
-        return sum(self.transactions)
+        return sum(
+            transaction.amount
+            for transaction in self.transactions
+        )
 
     def average_transaction(self) -> float:
-        """Return the customer's average transaction value."""
+        """Calculate average transaction value."""
 
         if not self.transactions:
             return 0.0
 
         return self.total_spend() / len(self.transactions)
 
-    def is_high_value(self, threshold: float) -> bool:
-        """Return whether the customer exceeds the given spending threshold."""
+    def is_high_value(
+        self,
+        threshold: float,
+    ) -> bool:
+        """Determine whether customer is high value."""
 
         return self.total_spend() > threshold

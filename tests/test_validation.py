@@ -7,16 +7,32 @@ from customer_app.validation import validate_customer_data
 
 
 def test_valid_customer_data():
-    """Valid customer data should pass validation."""
+    """Valid customer data should not raise an exception."""
 
-    customer = {
+    customer_data = {
         "id": 101,
         "name": "Arun",
         "country": "India",
-        "transactions": [1200, 500, 800],
+        "transactions": [
+            {
+                "transaction_id": "TXN-101-001",
+                "amount": 1200,
+                "currency": "INR",
+            },
+            {
+                "transaction_id": "TXN-101-002",
+                "amount": 500,
+                "currency": "INR",
+            },
+            {
+                "transaction_id": "TXN-101-003",
+                "amount": 800,
+                "currency": "INR",
+            },
+        ],
     }
 
-    validate_customer_data(customer)
+    validate_customer_data(customer_data)
 
 
 def test_missing_required_field():

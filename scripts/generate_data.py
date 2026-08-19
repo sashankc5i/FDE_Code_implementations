@@ -41,19 +41,16 @@ def generate_customer(
 ) -> dict:
     """Generate a single synthetic customer."""
 
-    transaction_count = random.randint(
-        min_transactions,
-        max_transactions,
-    )
+    transaction_count = random.randint(1, 5)
 
     transactions = [
-        random.randint(
-            min_transaction_value,
-            max_transaction_value,
-        )
-        for _ in range(transaction_count)
-    ]
-
+    {
+        "transaction_id": f"TXN-{customer_id}-{index:03d}",
+        "amount": random.randint(100, 5000),
+        "currency": "INR",
+    }
+    for index in range(1, transaction_count + 1)
+]
     return {
         "id": customer_id,
         "name": random.choice(FIRST_NAMES),
