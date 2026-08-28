@@ -933,4 +933,12 @@ Replace:
 git clone <repository-url>
 ````
 
+## Customer Demo
 
+The Phase 2 customer demonstration is documented in:
+
+[Customer Demo Playbook](/CUSTOMER_DEMO_PLAYBOOK.md)
+
+The demo uses the existing Streamlit application and Mock Customer API
+to demonstrate a persona-based customer scenario, success criteria,
+synthetic data, failure handling, and customer feedback.
