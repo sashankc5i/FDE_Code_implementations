@@ -1,0 +1,5 @@
+cluster,tenure_months,orders_last_90_days,total_spend_last_90_days,avg_order_value,support_tickets_last_90_days,days_since_last_order,customer_count,customer_pct
+0,16.15,3.0,7334.2,1771.97,6.54,55.44,199,16.58
+1,28.09,17.67,51327.91,2902.42,2.0,8.26,236,19.67
+2,18.33,8.79,18770.25,2116.16,3.08,17.58,480,40.0
+3,7.69,2.23,3958.35,1552.91,2.34,46.66,285,23.75
