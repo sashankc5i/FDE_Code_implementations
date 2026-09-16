@@ -1,0 +1,22 @@
+[project]
+name = "agentic-incident-response"
+version = "0.1.0"
+description = "An FDE-oriented agentic AI system for production data pipeline incident investigation and remediation."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "openai",
+    "pydantic",
+    "pydantic-settings",
+    "python-dotenv",
+    "httpx",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
