@@ -1,0 +1,80 @@
+{
+  "incident_id": "INC-2026-0916-001",
+  "pipeline_id": "customer_360",
+  "current_state": "CLASSIFYING",
+  "failure_type": "SCHEMA_DRIFT",
+  "observations": [
+    {
+      "source": "find_pipeline",
+      "data": {
+        "success": true,
+        "pipeline_id": "customer_360",
+        "name": "Customer 360 Pipeline"
+      }
+    },
+    {
+      "source": "get_pipeline_status",
+      "data": {
+        "success": true,
+        "pipeline": {
+          "pipeline_id": "customer_360",
+          "name": "Customer 360 Pipeline",
+          "status": "FAILED",
+          "last_run": "2026-09-16T02:14:32",
+          "failure_stage": "silver_transformation",
+          "error": "AnalysisException: Cannot resolve column 'customer_segment'"
+        }
+      }
+    },
+    {
+      "source": "get_pipeline_logs",
+      "data": {
+        "success": true,
+        "pipeline_id": "customer_360",
+        "logs": [
+          {
+            "timestamp": "2026-09-16T02:14:21",
+            "level": "INFO",
+            "message": "Silver transformation started"
+          },
+          {
+            "timestamp": "2026-09-16T02:14:28",
+            "level": "INFO",
+            "message": "Reading source table customer_master"
+          },
+          {
+            "timestamp": "2026-09-16T02:14:31",
+            "level": "ERROR",
+            "message": "AnalysisException: Cannot resolve column 'customer_segment'"
+          }
+        ]
+      }
+    },
+    {
+      "source": "get_table_schema",
+      "data": {
+        "success": true,
+        "table_name": "customer_master",
+        "columns": [
+          "customer_id",
+          "customer_name",
+          "email",
+          "country",
+          "segment",
+          "created_date"
+        ]
+      }
+    }
+  ],
+  "actions_taken": [
+    "find_pipeline({'name': 'Customer 360 pipeline'})",
+    "get_pipeline_status({'pipeline_id': 'customer_360'})",
+    "get_pipeline_logs({'pipeline_id': 'customer_360'})",
+    "get_table_schema({'table_name': 'customer_master'})"
+  ],
+  "llm_iterations": 5,
+  "tool_calls": 4,
+  "confidence": 0.0,
+  "requires_human": false,
+  "last_error": null
+}

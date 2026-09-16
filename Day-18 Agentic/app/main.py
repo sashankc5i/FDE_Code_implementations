@@ -1,22 +1,39 @@
 from app.agents.incident_agent import run_agent
+from app.models.incident_state import IncidentState
+from app.workflows.checkpoint_store import load_state
 
 
-def main() -> None:
-
-    user_input = """
-    The Customer 360 pipeline failed.
-
-    Investigate the pipeline and tell me:
-    1. What happened?
-    2. What evidence do you have?
-    3. What should we investigate next?
-    """
-
-    result = run_agent(user_input)
-
-    print("\n=== INCIDENT AGENT ===\n")
-    print(result)
+INCIDENT_ID = "INC-2026-0916-001"
 
 
-if __name__ == "__main__":
-    main()
+state = load_state(INCIDENT_ID)
+
+if state is None:
+    state = IncidentState(
+        incident_id=INCIDENT_ID
+    )
+
+else:
+    print(
+        f"Resuming incident {INCIDENT_ID}"
+    )
+
+    print(
+        f"Previous state: {state.current_state}"
+    )
+
+    print(
+        f"Previous tool calls: {state.tool_calls}"
+    )
+
+
+result = run_agent(
+    "Why did the Customer 360 pipeline fail?",
+    state,
+)
+
+print("\n=== INCIDENT AGENT ===")
+print(result)
+
+print("\n=== INCIDENT STATE ===")
+print(state.model_dump_json(indent=2))
