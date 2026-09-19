@@ -1,0 +1,2 @@
+import {getIncidents} from "@/lib/server-api";
+export default async function IncidentsPage(){const incidents=await getIncidents();return <main className="container"><section className="panel"><p className="eyebrow">Server Component</p><h1>Incidents</h1><p>Server-side data fetching from the FastAPI training backend.</p><div className="incident-list">{incidents.map(i=><article className="incident-card" key={i.id}><div><strong>{i.id}</strong><h2>{i.title}</h2><p>{i.description}</p></div><span className="status">{i.status}</span></article>)}</div></section></main>}

@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin-bottom: 8px;
+}
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.card span {
+    display: block;
+    color: #666;
+}
+
+.card strong {
+    display: block;
+    margin-top: 10px;
+    font-size: 28px;
+}
+
+.segment-header,
+.segment-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #eee;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.message {
+    margin-bottom: 20px;
+}
+
+.error {
+    display: none;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #ffe5e5;
+}
+
+@media (max-width: 800px) {
+
+    .kpi-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}

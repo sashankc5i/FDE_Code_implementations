@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Business Performance Dashboard
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="./css/styles.css"
+    >
+
+</head>
+
+<body>
+
+    <main class="container">
+
+        <header>
+
+            <h1>
+                Business Performance
+            </h1>
+
+            <p>
+                API-driven dashboard
+            </p>
+
+        </header>
+
+
+        <div
+            id="loading"
+            class="message"
+        >
+            Loading dashboard...
+        </div>
+
+
+        <div
+            id="error"
+            class="error"
+        ></div>
+
+
+        <section class="kpi-grid">
+
+            <div class="card">
+
+                <span>
+                    Revenue
+                </span>
+
+                <strong id="revenue">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="card">
+
+                <span>
+                    Customers
+                </span>
+
+                <strong id="customers">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="card">
+
+                <span>
+                    Orders
+                </span>
+
+                <strong id="orders">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="card">
+
+                <span>
+                    Conversion
+                </span>
+
+                <strong id="conversion">
+                    -
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <section class="card">
+
+            <h2>
+                Customer Segments
+            </h2>
+
+            <div class="segment-header">
+
+                <span>
+                    Segment
+                </span>
+
+                <span>
+                    Customers
+                </span>
+
+                <span>
+                    Revenue
+                </span>
+
+            </div>
+
+            <div id="segments"></div>
+
+        </section>
+
+
+        <section class="card">
+
+            <h2>
+                Recent Orders
+            </h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Order
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Revenue
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="orders"></tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+
+    <script
+        type="module"
+        src="./js/main.js"
+    ></script>
+
+</body>
+
+</html>

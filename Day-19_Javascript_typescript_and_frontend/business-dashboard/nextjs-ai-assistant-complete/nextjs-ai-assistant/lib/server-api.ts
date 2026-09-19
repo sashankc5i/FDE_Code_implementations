@@ -1,0 +1,3 @@
+export interface Incident{id:string;title:string;description:string;status:"Open"|"Investigating"|"Resolved"}
+const fallback:Incident[]=[{id:"INC-1001",title:"Customer 360 pipeline failure",description:"Silver transformation failed because customer_segment was missing.",status:"Investigating"},{id:"INC-1002",title:"Retail ingestion delay",description:"Source file arrival was delayed beyond the ingestion SLA.",status:"Open"}];
+export async function getIncidents():Promise<Incident[]>{const url=process.env.AI_BACKEND_URL;if(!url)return fallback;try{const r=await fetch(`${url}/api/incidents`,{cache:"no-store"});if(!r.ok)return fallback;const d=await r.json() as {incidents?:Incident[]};return d.incidents??fallback}catch{return fallback}}
