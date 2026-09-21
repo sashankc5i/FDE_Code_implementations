@@ -1,0 +1,205 @@
+# ============================================================
+# Python
+# ============================================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.env
+.env.*
+!.env.example
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+*.egg
+MANIFEST
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+
+# ============================================================
+# Prefect
+# ============================================================
+
+.prefect/
+.prefectignore
+
+# Local Prefect artifacts / state
+prefect.db
+*.prefect
+
+
+# ============================================================
+# Jupyter / Notebooks
+# ============================================================
+
+.ipynb_checkpoints/
+
+
+# ============================================================
+# Environment / Secrets
+# ============================================================
+
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Keep example configuration files
+!.env.example
+
+# Certificates / keys
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+
+# ============================================================
+# Logs
+# ============================================================
+
+*.log
+logs/
+log/
+*.out
+
+
+# ============================================================
+# PostgreSQL / Database Local Files
+# ============================================================
+
+# Local PostgreSQL dumps
+*.dump
+*.backup
+*.bak
+
+# SQL client history
+.psql_history
+
+# SQLite/local DB files if used during testing
+*.sqlite
+*.sqlite3
+*.db
+
+
+# ============================================================
+# IDE / Editors
+# ============================================================
+
+.vscode/
+.idea/
+*.iml
+
+# VS Code local settings
+.history/
+
+
+# ============================================================
+# Operating System
+# ============================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+
+
+# ============================================================
+# Temporary / Generated Files
+# ============================================================
+
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
+tmp/
+temp/
+
+
+# ============================================================
+# Data / Generated Artifacts
+# ============================================================
+
+# Avoid committing large local datasets
+data/
+datasets/
+*.csv
+*.parquet
+*.jsonl
+
+# Allow explicitly tracked synthetic configuration/data if needed
+!synthetic/
+!synthetic/**
+
+
+# ============================================================
+# Build / Tool Artifacts
+# ============================================================
+
+.pytype/
+.ruff_cache/
+.pyright/
+
+
+# ============================================================
+# Archives
+# ============================================================
+
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+
+# ============================================================
+# Local Documentation / Generated Files
+# ============================================================
+
+# Generated Word/Excel/PDF artifacts
+# Uncomment if these are generated locally and should not be committed:
+# *.docx
+# *.xlsx
+# *.pdf
+
+
+# ============================================================
+# OS / Tool Noise
+# ============================================================
+
+.DS_Store
+desktop.ini
