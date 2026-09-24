@@ -1,0 +1,50 @@
+[
+  {
+    "question": "What are common causes of HTTP 401 errors?",
+    "expected_sources": [
+      "authentication.md"
+    ]
+  },
+  {
+    "question": "What should I check after introducing a custom domain to an Azure Container App?",
+    "expected_sources": [
+      "azure_container_apps.md",
+      "authentication.md"
+    ]
+  },
+  {
+    "question": "How should I investigate a slow database query?",
+    "expected_sources": [
+      "database_troubleshooting.md"
+    ]
+  },
+  {
+    "question": "What should be validated after deploying a new application revision?",
+    "expected_sources": [
+      "deployment_runbook.md",
+      "azure_container_apps.md"
+    ]
+  },
+  {
+    "question": "What information should be included in an incident update?",
+    "expected_sources": [
+      "incident_response.md"
+    ]
+  },
+  {
+    "question": "What should never be committed to source control?",
+    "expected_sources": [
+      "engineering_standards.md"
+    ]
+  },
+  {
+    "question": "How should HTTP methods be used in an API?",
+    "expected_sources": [
+      "api_design.md"
+    ]
+  },
+  {
+    "question": "How do I configure Kubernetes horizontal pod autoscaling?",
+    "expected_sources": []
+  }
+]

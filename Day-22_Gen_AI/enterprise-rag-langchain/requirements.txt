@@ -1,0 +1,9 @@
+numpy
+pandas
+scikit-learn
+sentence-transformers
+faiss-cpu
+python-dotenv
+groq
+langchain
+langchain-groq
