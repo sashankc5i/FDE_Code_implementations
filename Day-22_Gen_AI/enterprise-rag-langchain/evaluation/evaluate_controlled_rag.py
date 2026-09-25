@@ -1,126 +1,93 @@
 import json
-import sys
 from pathlib import Path
 
+from src.controlled_langchain_rag import answer_question
 
-# --------------------------------------------------
-# Project paths
-# --------------------------------------------------
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SRC_DIR = PROJECT_ROOT / "src"
 
-# Allow imports from both the project root and src/
-sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(SRC_DIR))
+EVALUATION_FILE = PROJECT_ROOT / "evaluation" / "questions.json"
 
 
-# --------------------------------------------------
-# Application import
-# --------------------------------------------------
+def evaluate_question(item):
+    """
+    Evaluate one question against the expected source set.
 
-from controlled_langchain_rag import answer_question
+    A question passes when at least one expected source
+    is present in the retrieved source set.
 
+    For out-of-domain questions, the expected source set
+    is empty and the test passes only when no source
+    is retrieved.
+    """
 
-# --------------------------------------------------
-# Evaluation data
-# --------------------------------------------------
+    question = item["question"]
+    expected_sources = set(item["expected_sources"])
 
-EVALUATION_FILE = (
-    PROJECT_ROOT / "evaluation" / "questions.json"
-)
+    result = answer_question(question)
 
+    actual_sources = set(result["sources"])
 
-# --------------------------------------------------
-# Evaluation
-# --------------------------------------------------
+    if not expected_sources:
+        success = len(actual_sources) == 0
+    else:
+        success = bool(
+            expected_sources.intersection(actual_sources)
+        )
+
+    matched_sources = expected_sources.intersection(
+        actual_sources
+    )
+
+    return {
+        "question": question,
+        "expected_sources": expected_sources,
+        "actual_sources": actual_sources,
+        "matched_sources": matched_sources,
+        "success": success,
+    }
+
 
 def main():
-
     with open(
         EVALUATION_FILE,
         "r",
-        encoding="utf-8"
+        encoding="utf-8",
     ) as file:
-
         questions = json.load(file)
-
 
     passed = 0
 
-
     print("\n========== CONTROLLED RAG EVALUATION ==========")
 
-
     for index, item in enumerate(questions, start=1):
+        result = evaluate_question(item)
 
-        question = item["question"]
-
-        expected_sources = set(
-            item["expected_sources"]
-        )
-
-
-        # Run the RAG application
-        result = answer_question(question)
-
-
-        actual_sources = set(
-            result["sources"]
-        )
-
-
-        # --------------------------------------------------
-        # Evaluation logic
-        # --------------------------------------------------
-
-        if not expected_sources:
-
-            # For out-of-domain questions,
-            # we expect the system to abstain.
-            success = len(actual_sources) == 0
-
-        else:
-
-            # At least one expected source should
-            # be retrieved.
-            success = bool(
-                expected_sources.intersection(
-                    actual_sources
-                )
-            )
-
-
-        if success:
+        if result["success"]:
             passed += 1
 
-
-        # --------------------------------------------------
-        # Print result
-        # --------------------------------------------------
-
         print(f"\nQuestion {index}:")
-        print(question)
+        print(result["question"])
 
         print(
             f"Expected sources: "
-            f"{sorted(expected_sources)}"
+            f"{sorted(result['expected_sources'])}"
         )
 
         print(
             f"Retrieved sources: "
-            f"{sorted(actual_sources)}"
+            f"{sorted(result['actual_sources'])}"
+        )
+
+        print(
+            f"Matched sources: "
+            f"{sorted(result['matched_sources'])}"
         )
 
         print(
             f"Result: "
-            f"{'PASS' if success else 'FAIL'}"
+            f"{'PASS' if result['success'] else 'FAIL'}"
         )
-
-
-    # --------------------------------------------------
-    # Summary
-    # --------------------------------------------------
 
     total = len(questions)
 
@@ -130,21 +97,11 @@ def main():
         else 0
     )
 
-
     print("\n========== SUMMARY ==========")
+    print(f"Passed: {passed}/{total}")
+    print(f"Failed: {total - passed}/{total}")
+    print(f"Score: {score:.2f}%")
 
-    print(
-        f"Passed: {passed}/{total}"
-    )
-
-    print(
-        f"Score: {score:.2f}%"
-    )
-
-
-# --------------------------------------------------
-# Entry point
-# --------------------------------------------------
 
 if __name__ == "__main__":
     main()

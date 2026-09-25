@@ -1,11 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-from langchain_model import model
+from src.langchain_model import model
 
-
-# -----------------------------------------
-# 1. Create reusable prompt template
-# -----------------------------------------
 
 prompt = ChatPromptTemplate.from_messages(
     [
@@ -20,82 +16,40 @@ If the provided context does not contain
 enough information to answer the question,
 say that the available knowledge base
 is insufficient.
-"""
+""",
         ),
         (
             "human",
             """
 Context:
+
 {context}
 
 Question:
 {question}
-"""
-        )
+""",
+        ),
     ]
 )
 
 
-# -----------------------------------------
-# 2. Provide input variables
-# -----------------------------------------
-
-context = """
+if __name__ == "__main__":
+    test_input = {
+        "context": """
 HTTP 401 Unauthorized commonly occurs when
 an access token is expired or invalid,
 the token audience is incorrect, or
 authentication configuration is incorrect.
-"""
-
-question = (
-    "What are common causes of HTTP 401 errors?"
-)
-
-
-# -----------------------------------------
-# 3. Render the prompt
-# -----------------------------------------
-
-messages = prompt.invoke(
-    {
-        "context": context,
-        "question": question
+""",
+        "question": "What are common causes of HTTP 401 errors?",
     }
-)
 
+    formatted_prompt = prompt.invoke(test_input)
 
-# -----------------------------------------
-# 4. Inspect the generated messages
-# -----------------------------------------
+    print("\n========== PROMPT TEMPLATE ==========")
+    print(formatted_prompt)
 
-print(
-    "\n========== PROMPT TEMPLATE =========="
-)
+    response = model.invoke(formatted_prompt)
 
-for message in messages.messages:
-
-    print(
-        f"\n[{message.type.upper()}]"
-    )
-
-    print(
-        message.content
-    )
-
-
-# -----------------------------------------
-# 5. Send prompt to model
-# -----------------------------------------
-
-response = model.invoke(
-    messages
-)
-
-
-print(
-    "\n========== MODEL RESPONSE =========="
-)
-
-print(
-    response.content
-)
+    print("\n========== MODEL RESPONSE ==========")
+    print(response.content)

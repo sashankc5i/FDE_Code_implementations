@@ -1,51 +1,70 @@
-from langchain_model import model
-from langchain_prompt import prompt
-from langchain_retriever import EngineeringRetriever
+from src.langchain_model import model
+from src.langchain_prompt import prompt
+from src.langchain_retriever import EngineeringRetriever
 
 
 THRESHOLD = 0.50
 
 
-def retrieve_with_control(question: str):
-    retriever = EngineeringRetriever(k=3)
+def retrieve_with_control(question, top_k=3, threshold=THRESHOLD):
+    """
+    Retrieve documents and keep only results above the
+    configured similarity threshold.
+    """
+
+    retriever = EngineeringRetriever()
 
     documents = retriever.invoke(question)
 
-    accepted_documents = [
-        document
-        for document in documents
-        if document.metadata["score"] >= THRESHOLD
-    ]
+    controlled_documents = []
 
-    return accepted_documents
+    for document in documents[:top_k]:
+        score = document.metadata.get("score", 0.0)
+
+        if score >= threshold:
+            controlled_documents.append(document)
+
+    return controlled_documents
 
 
 def format_context(documents):
+    """
+    Convert retrieved LangChain Documents into the
+    context format expected by the prompt.
+    """
+
+    if not documents:
+        return ""
 
     context_parts = []
 
     for document in documents:
-
-        source = document.metadata["source"]
+        source = document.metadata.get("source", "unknown")
 
         context_parts.append(
-            f"[Source: {source}]\n"
+            f"Source: {source}\n"
             f"{document.page_content}"
         )
 
     return "\n\n".join(context_parts)
 
 
-def answer_question(question: str):
+def answer_question(question):
+    """
+    Answer a question using controlled retrieval.
+
+    If no sufficiently relevant evidence is found,
+    abstain instead of sending unsupported context
+    to the model.
+    """
 
     documents = retrieve_with_control(question)
 
     if not documents:
-
         return {
             "answer": (
-                "I don't have sufficient evidence in the "
-                "engineering knowledge base to answer this."
+                "The available knowledge base is insufficient "
+                "to answer this question."
             ),
             "sources": [],
         }
@@ -62,12 +81,13 @@ def answer_question(question: str):
         }
     )
 
-    sources = list(
-        dict.fromkeys(
-            document.metadata["source"]
-            for document in documents
-        )
-    )
+    sources = []
+
+    for document in documents:
+        source = document.metadata.get("source")
+
+        if source and source not in sources:
+            sources.append(source)
 
     return {
         "answer": response.content,
@@ -76,25 +96,17 @@ def answer_question(question: str):
 
 
 if __name__ == "__main__":
+    question = "What are common causes of HTTP 401 errors?"
 
-    questions = [
-        "What are common causes of HTTP 401 errors?",
-        "How do I configure Kubernetes horizontal pod autoscaling?",
-    ]
+    result = answer_question(question)
 
-    for question in questions:
+    print("\n========== CONTROLLED LANGCHAIN RAG ==========")
+    print("\nQuestion:")
+    print(question)
 
-        print("\n======================================")
-        print(f"QUESTION: {question}")
+    print("\nAnswer:")
+    print(result["answer"])
 
-        result = answer_question(question)
-
-        print("\nANSWER:")
-        print(result["answer"])
-
-        print("\nSOURCES:")
-        if result["sources"]:
-            for source in result["sources"]:
-                print(f"- {source}")
-        else:
-            print("- None")
+    print("\nSources:")
+    for source in result["sources"]:
+        print(f"- {source}")
