@@ -1,0 +1,147 @@
+{
+  "evaluation_cases": [
+    {
+      "case_id": "CASE_001",
+      "description": "Major forecast deterioration with pipeline and churn issues",
+      "region": "West",
+      "segment": "Enterprise",
+      "period": "2026-03-01",
+
+      "ground_truth_signals": [
+        "revenue_deterioration",
+        "pipeline_deterioration",
+        "customer_churn"
+      ],
+
+      "high_priority_signals": [
+        "pipeline_deterioration",
+        "customer_churn"
+      ],
+
+      "medium_priority_signals": [
+        "external_demand"
+      ],
+
+      "low_priority_signals": [
+        "pricing"
+      ],
+
+      "irrelevant_signals": [
+        "pricing_as_major_driver"
+      ]
+    },
+
+    {
+      "case_id": "CASE_002",
+      "description": "Revenue deterioration driven primarily by pipeline weakness",
+      "region": "West",
+      "segment": "Enterprise",
+      "period": "2026-02-01",
+
+      "ground_truth_signals": [
+        "revenue_deterioration",
+        "pipeline_deterioration"
+      ],
+
+      "high_priority_signals": [
+        "pipeline_deterioration"
+      ],
+
+      "medium_priority_signals": [
+        "external_demand"
+      ],
+
+      "low_priority_signals": [
+        "pricing"
+      ],
+
+      "irrelevant_signals": [
+        "customer_churn_as_major_driver"
+      ]
+    },
+
+    {
+      "case_id": "CASE_003",
+      "description": "Stable business condition with no material forecast issue",
+      "region": "North",
+      "segment": "SMB",
+      "period": "2025-09-01",
+
+      "ground_truth_signals": [],
+
+      "high_priority_signals": [],
+
+      "medium_priority_signals": [],
+
+      "low_priority_signals": [],
+
+      "irrelevant_signals": [
+        "pipeline_deterioration",
+        "customer_churn",
+        "pricing",
+        "external_demand"
+      ]
+    },
+
+    {
+      "case_id": "CASE_004",
+      "description": "Revenue deterioration with customer health as major signal",
+      "region": "West",
+      "segment": "Enterprise",
+      "period": "2026-01-01",
+
+      "ground_truth_signals": [
+        "revenue_deterioration",
+        "customer_churn"
+      ],
+
+      "high_priority_signals": [
+        "customer_churn"
+      ],
+
+      "medium_priority_signals": [
+        "pipeline_deterioration"
+      ],
+
+      "low_priority_signals": [
+        "pricing"
+      ],
+
+      "irrelevant_signals": [
+        "pricing_as_major_driver"
+      ]
+    },
+
+    {
+      "case_id": "CASE_005",
+      "description": "External demand deterioration supporting internal weakness",
+      "region": "West",
+      "segment": "Enterprise",
+      "period": "2026-03-01",
+
+      "ground_truth_signals": [
+        "revenue_deterioration",
+        "pipeline_deterioration",
+        "customer_churn",
+        "external_demand"
+      ],
+
+      "high_priority_signals": [
+        "pipeline_deterioration",
+        "customer_churn"
+      ],
+
+      "medium_priority_signals": [
+        "external_demand"
+      ],
+
+      "low_priority_signals": [
+        "pricing"
+      ],
+
+      "irrelevant_signals": [
+        "competitive_intensity"
+      ]
+    }
+  ]
+}
